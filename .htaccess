@@ -1,0 +1,17 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /auto_workshop/
+    
+    # Prevent directory listing
+    Options -Indexes
+    
+    # Redirect trailing slashes
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
+    
+    # Protect sensitive files
+    <FilesMatch "(\.env|config\.php|auth\.php)">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+</IfModule>
