@@ -100,12 +100,24 @@
                         onclick="toggleLanguage()">
                         MY
                     </button>
-                    <a href="../public/index.php" class="text-gray-700 hover:text-primary" data-translate="home">Home</a>
-                    <a href="book.php" class="text-gray-700 hover:text-primary" data-translate="book">Book Now</a>
+                    <a href="<?= ($_SESSION['user_type'] ?? '') === 'workshop' ? 'dashboard.php' : '../public/index.php' ?>" 
+                       class="block text-gray-700 hover:text-primary" 
+                       data-translate="home">
+                       Home
+                    </a>
+                    <?php if (($_SESSION['user_type'] ?? '') === 'customer'): ?>
+                        <a href="book.php" class="text-gray-700 hover:text-primary" data-translate="book">Book Now</a>
+                    <?php endif; ?>
+                    <?php if (($_SESSION['user_type'] ?? '') === 'workshop'): ?>
+                        <a href="status_management.php" class="block text-gray-700 hover:text-gray-900">
+                            <i class="ri-calendar-todo-line mr-2"></i> Manage Bookings
+                        </a>
+                    <?php endif; ?>
                     <a href="../public/account.php" class="flex items-center space-x-2 text-gray-700 hover:text-primary">
                         <i class="ri-user-line w-5 h-5 flex items-center justify-center"></i>
                         <span data-translate="account">Account</span>
                     </a>
+
                     <!-- <a href="../auth/logout.php" class="text-gray-700 hover:text-primary" data-translate="Logout">Logout Now</a> -->
                 </div>
             </div>
@@ -132,8 +144,19 @@
             </div>
             <!-- Mobile Menu Items -->
             <div id="mobileMenu" class="hidden pb-4 space-y-4 border-t">
-                <a href="../public/index.php" class="block text-gray-700 hover:text-primary pt-4" data-translate="home">Home</a>
-                <a href="book.php" class="block text-gray-700 hover:text-primary" data-translate="book">Book Now</a>
+                <a href="<?= ($_SESSION['user_type'] ?? '') === 'workshop' ? 'dashboard.php' : '../public/index.php' ?>" 
+                   class="block text-gray-700 hover:text-primary" 
+                   data-translate="home">
+                   Home
+                </a>
+                <?php if (($_SESSION['user_type'] ?? '') === 'customer'): ?>
+                    <a href="book.php" class="text-gray-700 hover:text-primary" data-translate="book">Book Now</a>
+                <?php endif; ?>
+                <?php if (($_SESSION['user_type'] ?? '') === 'workshop'): ?>
+                    <a href="status_management.php" class="block text-gray-700 hover:text-gray-900">
+                        <i class="ri-calendar-todo-line mr-2"></i> Manage Bookings
+                    </a>
+                <?php endif; ?>
                 <!-- <a href="../auth/logout.php" class="text-gray-700 hover:text-primary" data-translate="Logout">Logout Now</a> -->
             </div>
         </div>

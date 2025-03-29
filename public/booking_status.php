@@ -2,6 +2,8 @@
 include '../config/db.php';
 $booking_id = $_GET['booking_id'] ?? null;
 
+$_SESSION['booking_source'] = 'index';
+
 if (!$booking_id) {
     die("Error: Missing booking ID");
 }

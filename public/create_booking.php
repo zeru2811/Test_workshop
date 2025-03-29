@@ -20,8 +20,9 @@ try {
     }
 
     // Create booking
-    $stmt = $pdo->prepare("INSERT INTO Booking (CustomerID, WorkshopID, Description) VALUES (?, ?, ?)");
-    $stmt->execute([$user_id, $workshop_id, $description]);
+    $source = (strpos($_SERVER['HTTP_REFERER'], 'book.php') !== false) ? 'book' : 'index';
+    $stmt = $pdo->prepare("INSERT INTO Booking (CustomerID, WorkshopID, Description, source) VALUES (?, ?, ?, ?)");
+    $stmt->execute([$user_id, $workshop_id, $description, $source]);
     $booking_id = $pdo->lastInsertId();
 
     header("Location: booking_status.php?booking_id=$booking_id");

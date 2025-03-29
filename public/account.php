@@ -23,13 +23,13 @@ if ($userType === 'customer') {
                    JOIN Workshop w ON b.WorkshopID = w.WorkshopID
                    JOIN Township t ON w.TownshipID = t.TownshipID
                    WHERE b.CustomerID = ?
-                   ORDER BY b.BookingDateTime DESC";
+                   ORDER BY b.BookingID DESC";
 } else { // workshop
     $bookingQuery = "SELECT b.*, u.FullName, u.PhoneNumber 
                    FROM Booking b
                    JOIN Users u ON b.CustomerID = u.UserID
                    WHERE b.WorkshopID = (SELECT WorkshopID FROM Workshop WHERE UserID = ?)
-                   ORDER BY b.BookingDateTime DESC";
+                   ORDER BY b.BookingID DESC";
 }
 
 $stmt = $pdo->prepare($bookingQuery);
@@ -105,12 +105,24 @@ $bookings = $stmt->fetchAll();
                         <p class="mt-3 text-gray-700"><?= htmlspecialchars($booking['Description']) ?></p>
                         
                         <div class="mt-4 flex items-center space-x-3">
-                            <?php if ($userType === 'customer'): ?>
-                                <a href="booking_status.php?booking_id=<?= $booking['BookingID'] ?>" class="text-blue-500 hover:text-blue-700 text-sm">View Details</a>
+                        <?php if ($userType === 'customer'): ?>
+                                <?php 
+                                // Determine which status page to use
+                                $statusPage = ($booking['source'] ?? 'index') === 'book' 
+                                    ? 'booking_status_book.php' 
+                                    : 'booking_status.php';
+                                ?>
+                                <a href="<?= $statusPage ?>?booking_id=<?= $booking['BookingID'] ?>" 
+                                   class="text-blue-500 hover:text-blue-700 text-sm">
+                                    View Details
+                                </a>
                             <?php endif; ?>
                             
                             <?php if ($booking['Status'] === 'Pending' && $userType === 'workshop'): ?>
-                                <a href="dashboard.php?booking_id=<?= $booking['BookingID'] ?>" class="text-blue-500 hover:text-blue-700 text-sm">Process Booking</a>
+                                <a href="<?= $booking['source'] === 'index' ? 'dashboard.php' : 'status_management.php' ?>?booking_id=<?= $booking['BookingID'] ?>" 
+                                   class="text-blue-500 hover:text-blue-700 text-sm">
+                                    Process Booking
+                                </a>
                             <?php endif; ?>
                             
                             <?php if ($booking['Status'] === 'Confirmed' && $userType === 'customer' && $booking['EstimatedWaitTime']): ?>
