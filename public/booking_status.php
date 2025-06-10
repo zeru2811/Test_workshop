@@ -1,5 +1,6 @@
 <?php
 include '../config/db.php';
+session_start();
 $booking_id = $_GET['booking_id'] ?? null;
 
 $_SESSION['booking_source'] = 'index';

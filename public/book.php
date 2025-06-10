@@ -8,6 +8,11 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+if (($_SESSION['user_type'] ?? '') !== 'customer') {
+    header("Location: ../auth/unauthorized.php");
+    exit();
+}
+
 $userId = $_SESSION['user_id'];
 $error = '';
 $success = '';

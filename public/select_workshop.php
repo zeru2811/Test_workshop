@@ -1,5 +1,6 @@
 <?php
 include '../config/db.php';
+session_start();
 $township_id = $_POST['township_id'];
 $stmt = $pdo->prepare("SELECT * FROM Workshop WHERE TownshipID = ?");
 $stmt->execute([$township_id]);

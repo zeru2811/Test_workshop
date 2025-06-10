@@ -18,7 +18,6 @@ try {
     if (!$stmt->fetch()) {
         die("Error: Invalid user or not a customer");
     }
-
     // Create booking
     $source = (strpos($_SERVER['HTTP_REFERER'], 'book.php') !== false) ? 'book' : 'index';
     $stmt = $pdo->prepare("INSERT INTO Booking (CustomerID, WorkshopID, Description, source) VALUES (?, ?, ?, ?)");

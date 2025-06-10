@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 29, 2025 at 07:15 PM
+-- Generation Time: Jun 10, 2025 at 04:13 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -47,7 +47,15 @@ CREATE TABLE `Booking` (
 --
 
 INSERT INTO `Booking` (`BookingID`, `CustomerID`, `WorkshopID`, `Description`, `BookingDateTime`, `Status`, `EstimatedWaitTime`, `ConfirmationDateTime`, `CompletionDateTime`, `EstimatedPrice`, `FinalPrice`, `source`) VALUES
-(50, 19, 11, 'do quickly please', '2025-03-31 15:00:00', 'Confirmed', 90, '2025-03-30 00:25:58', NULL, '600000.00', NULL, 'book');
+(50, 19, 11, 'do quickly please', '2025-03-31 15:00:00', 'Completed', 90, '2025-03-30 00:25:58', '2025-03-30 14:41:10', '600000.00', '590000.00', 'book'),
+(51, 19, 16, 'car nay ma kg loh', '2025-03-30 14:35:05', 'Completed', 25, '2025-03-30 14:38:35', '2025-03-30 14:42:48', '120000.00', '150000.00', 'index'),
+(52, 19, 18, 'tie break', '2025-04-01 13:41:57', 'Completed', 15, '2025-04-01 13:42:21', '2025-04-01 13:42:40', '150000.00', '120000.00', 'index'),
+(53, 19, 18, 'nth', '2025-04-02 10:00:00', 'Completed', 105, '2025-04-01 13:43:28', '2025-04-01 13:43:55', '450000.00', '430000.00', 'book'),
+(54, 20, 19, 'Tie Break', '2025-04-17 22:23:47', 'Completed', 10, '2025-04-17 22:26:02', '2025-04-17 22:26:50', '50000.00', '55000.00', 'index'),
+(55, 20, 19, 'nthg', '2025-04-18 13:00:00', 'Completed', 195, '2025-04-17 22:29:29', '2025-04-17 22:29:54', '1050000.00', '1000000.00', 'book'),
+(56, 21, 19, '.', '2025-04-19 09:00:00', 'Completed', 135, NULL, '2025-06-03 09:54:46', '780000.00', NULL, 'book'),
+(57, 21, 19, 'fix wheel', '2025-06-03 09:56:38', 'Completed', 10, '2025-06-03 09:56:50', '2025-06-03 09:57:26', '150000.00', '140000.00', 'index'),
+(58, 21, 19, 'quick fix', '2025-06-17 09:00:00', 'Completed', 90, '2025-06-03 09:58:52', '2025-06-03 09:59:26', '600000.00', '590000.00', 'book');
 
 -- --------------------------------------------------------
 
@@ -67,7 +75,18 @@ CREATE TABLE `BookingServices` (
 
 INSERT INTO `BookingServices` (`BookingServiceID`, `BookingID`, `ServiceID`) VALUES
 (23, 50, 1),
-(24, 50, 2);
+(24, 50, 2),
+(25, 53, 3),
+(26, 53, 4),
+(27, 55, 1),
+(28, 55, 2),
+(29, 55, 3),
+(30, 55, 4),
+(31, 56, 1),
+(32, 56, 2),
+(33, 56, 3),
+(34, 58, 1),
+(35, 58, 2);
 
 -- --------------------------------------------------------
 
@@ -104,21 +123,22 @@ INSERT INTO `Services` (`ServiceID`, `Name`, `Description`, `Duration`, `BasePri
 CREATE TABLE `Township` (
   `TownshipID` int(11) NOT NULL,
   `TownshipName` varchar(50) NOT NULL,
-  `CreatedAt` datetime DEFAULT current_timestamp()
+  `CreatedAt` datetime DEFAULT current_timestamp(),
+  `RegionID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `Township`
 --
 
-INSERT INTO `Township` (`TownshipID`, `TownshipName`, `CreatedAt`) VALUES
-(1, 'Aungmyaythazan', '2025-03-28 00:46:37'),
-(2, 'Chanmyathazi', '2025-03-28 00:46:37'),
-(3, 'Mahaaungmye', '2025-03-28 00:46:37'),
-(4, 'Chanayethazan', '2025-03-28 00:46:37'),
-(5, 'Pyigyidagun', '2025-03-28 00:46:37'),
-(6, 'Amarapura', '2025-03-28 00:46:37'),
-(7, 'Patheingyi', '2025-03-28 00:46:37');
+INSERT INTO `Township` (`TownshipID`, `TownshipName`, `CreatedAt`, `RegionID`) VALUES
+(1, 'Aungmyaythazan', '2025-03-28 00:46:37', 1),
+(2, 'Chanmyathazi', '2025-03-28 00:46:37', 1),
+(3, 'Mahaaungmye', '2025-03-28 00:46:37', 1),
+(4, 'Chanayethazan', '2025-03-28 00:46:37', 1),
+(5, 'Pyigyidagun', '2025-03-28 00:46:37', 1),
+(6, 'Amarapura', '2025-03-28 00:46:37', 1),
+(7, 'Patheingyi', '2025-03-28 00:46:37', 1);
 
 -- --------------------------------------------------------
 
@@ -157,7 +177,9 @@ INSERT INTO `Users` (`UserID`, `FullName`, `Email`, `Password`, `PhoneNumber`, `
 (16, 'Ko Min Thu', 'minthu@highwayexperts.com', '$2y$10$JkAZTREEsg5rFV0kTtLZbOfBzMqwNM.2aOqo2xNCGc3Ay5lEIYbUS', '09 121 212 121', 'workshop', '2025-03-28 22:27:24'),
 (17, 'Daw Nwe Nwe', 'nwenwe@thiriexpress.com', '$2y$10$n/Yu6lyFSN325.SZ9.7XvOTob9Rp7AX55HNVsu3/8/O.Kl5e4iuYe', '09 343 434 343', 'workshop', '2025-03-28 22:28:16'),
 (18, 'Wai Yan Ko Ko', 'zeru28112001@gmail.com', '$2y$10$ACs6vVAc6JTwh6ynaqvJNepkqq9YK1UedWjVElL/oniNq5PD7JPAC', '09763033544', 'customer', '2025-03-28 22:37:29'),
-(19, 'Zeru', 'waiyan.koko.2811@gmail.com', '$2y$10$EQqVJJo6xTI9M1bTCgkCLOB4Wgd0v2R54r7rgvSSW.UtkyAWQQQam', '09763033544', 'customer', '2025-03-29 16:08:25');
+(19, 'Zeru', 'waiyan.koko.2811@gmail.com', '$2y$10$EQqVJJo6xTI9M1bTCgkCLOB4Wgd0v2R54r7rgvSSW.UtkyAWQQQam', '09763033544', 'customer', '2025-03-29 16:08:25'),
+(20, 'Htet Aung Linn', 'htetaunglinn@gmail.com', '$2y$10$NP22DzexbaXij0ZWbvLrWO43oGWgQA9zo0mXGRDdH8vak7HmzOSSa', '+959779009919', 'customer', '2025-04-17 22:22:33'),
+(21, 'Wai Wai', 'wai@gmail.com', '$2y$10$zEeAOOPiN9AuxlLGvsXkVeMzd6//xip5XwxqAJRL1FrMVmqeu.BKK', '09763033544', 'customer', '2025-04-17 22:32:19');
 
 -- --------------------------------------------------------
 
@@ -180,7 +202,9 @@ CREATE TABLE `Vehicle` (
 --
 
 INSERT INTO `Vehicle` (`VehicleID`, `UserID`, `Make`, `Model`, `Year`, `Mileage`, `CreatedAt`) VALUES
-(5, 19, 'Toyota', '2022', 2024, 4000, '2025-03-30 00:06:42');
+(5, 19, 'Toyota', '2022', 2024, 4000, '2025-03-30 00:06:42'),
+(6, 20, 'Toyota', '2012', 2023, 10000, '2025-04-17 22:28:26'),
+(7, 21, 'Honda', '2010', 2025, 40000, '2025-04-17 22:33:15');
 
 -- --------------------------------------------------------
 
@@ -280,13 +304,13 @@ ALTER TABLE `Workshop`
 -- AUTO_INCREMENT for table `Booking`
 --
 ALTER TABLE `Booking`
-  MODIFY `BookingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `BookingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `BookingServices`
 --
 ALTER TABLE `BookingServices`
-  MODIFY `BookingServiceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `BookingServiceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `Services`
@@ -304,13 +328,13 @@ ALTER TABLE `Township`
 -- AUTO_INCREMENT for table `Users`
 --
 ALTER TABLE `Users`
-  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `Vehicle`
 --
 ALTER TABLE `Vehicle`
-  MODIFY `VehicleID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `VehicleID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `Workshop`

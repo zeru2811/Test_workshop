@@ -3,10 +3,15 @@ include '../config/db.php';
 session_start();
 
 // Redirect if not admin (uncomment when ready)
-// if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] != 'admin') {
-//     header("Location: ../auth/login.php");
-//     exit();
-// }
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../auth/login.php");
+    exit();
+}
+
+if (($_SESSION['user_type'] ?? '') !== 'workshop') {
+    header("Location: ../auth/unauthorized.php");
+    exit();
+}
 
 // Handle status update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {

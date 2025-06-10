@@ -61,7 +61,7 @@ $bookings = $stmt->fetchAll();
         </div>
     <?php else: ?>
         <?php foreach ($bookings as $booking): ?>
-        <div class="bg-white shadow-md rounded-lg p-6 mb-4 border border-gray-200">
+        <div class="bg-white shadow-md rounded-lg p-6 mb-4 border border-gray-200" >
             <div class="flex justify-between items-start mb-2">
                 <h3 class="text-lg font-bold text-gray-800">Booking #<?= $booking['BookingID'] ?></h3>
                 <span class="px-2 py-1 rounded-md text-sm font-medium
@@ -69,6 +69,7 @@ $bookings = $stmt->fetchAll();
                     <?= $booking['Status'] ?>
                 </span>
             </div>
+            
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
                 <div>

@@ -6,6 +6,12 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: ../auth/login.php");
     exit();
 }
+
+if (($_SESSION['user_type'] ?? '') !== 'customer') {
+    header("Location: ../auth/unauthorized.php");
+    exit();
+}
+
 ?>
 <?php include '../includes/header.php'; ?>
 
